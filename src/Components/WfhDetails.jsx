@@ -17,7 +17,7 @@ const WfhDetails = () => {
  
   useEffect(()=> {
     setLoading(true)
-    axios.get(`https://json-server-mocker-myapi.herokuapp.com/wfh_All/${params.id}`)
+    axios.get(`https://rentomojodata.herokuapp.com/wfh_All/${params.id}`)
     .then((res)=> {
       SetProduct(res.data)
      setLoading(false)

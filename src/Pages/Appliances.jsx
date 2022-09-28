@@ -17,7 +17,6 @@ import Slider from "../misc/ProductsPageslider";
 import { getAppliances } from "../Redux/App/actions";
 
 const Appliances = () => {
-  
   const [sliderValue, setSliderValue] = useState(0);
   const dispatch = useDispatch();
   const appliances = useSelector((store) => store.App.appliances);
@@ -29,28 +28,53 @@ const Appliances = () => {
   const urlstock = searchParams.get("stock");
 
   const [category, setCategory] = useState(urlCategory || []);
-  const [sortby, setSortby] = useState(urlSort || []);
+  const [sortbyPrice, setSortbyPrice] = useState(urlSort || []);
+  // console.log(sortbyPrice);
   const [stock, setStock] = useState(urlstock || []);
-  console.log(stock);
- 
- 
-  //get filtered data
+  // console.log(stock);
 
+ 
+
+
+  
+  //getting data and setting search params
+
+  //handle sort
   useEffect(() => {
-    if (appliances.length === 0 || location.search) {
-      const sortby = searchParams.get("sortby");
-      const getAppliancesParams = {
+    if (category || sortbyPrice) {
+      setSearchParams({
+        category: category,
+        sortbyPrice: sortbyPrice
+      });
+    }
+   
+  },[category,sortbyPrice,setSearchParams])
+ 
+
+
+
+
+   //get filtered data
+
+   useEffect(() => {
+
+
+    if (appliances.length === 0 || location ||sortbyPrice||category) {
+      const sortbyPrice = searchParams.get("sortbyPrice");
+      console.log(sortbyPrice);
+      const queryparams = {
         params: {
           category: searchParams.getAll("category"),
-          stock: searchParams.get("stock"),
-          _sort: sortby && "price",
-          _order: sortby,
+          sort: sortbyPrice && "price",
+          order: sortbyPrice,
         },
       };
 
-      dispatch(getAppliances(getAppliancesParams));
+      dispatch(getAppliances(queryparams));
     }
-  }, [location]);
+  }, [dispatch,location,sortbyPrice,category]);
+
+  
 
   //handle the changes
 
@@ -73,44 +97,29 @@ const Appliances = () => {
 
   //handle stock availability
   const handleStock = (e) => {
-    const option = e.target.value;
-
-    let newStock = [...stock];
-
-    if (stock.includes(option)) {
-      newStock.splice(newStock.indexOf(option), 1);
-    }
-    else{
-      newStock.push(option);
-    }
-    setStock(newStock);
+    // const option = e.target.value;
+    // let newStock = [...stock];
+    // if (stock.includes(option)) {
+    //   newStock.splice(newStock.indexOf(option), 1);
+    // }
+    // else{
+    //   newStock.push(option);
+    // }
+    // setStock(newStock);
   };
 
   //handle sorting
 
   const handleSort = (e) => {
-    if (e.target.value) {
-      setSortby(e.target.value);
-    }
+    setSortbyPrice(e.target.value);
   };
 
-  //getting data and setting search params
-
-  useEffect(() => {
-    if (category || sortby || stock) {
-      let params = {};
-      category && (params.category = category);
-      stock && (params.stock = stock);
-      sortby && (params.sortby = sortby);
-      setSearchParams(params);
-    }
-    dispatch(getAppliances());
-  }, [setSearchParams, sortby, category,stock]);
-
+  
+ 
   return (
     <>
       <Box>
-        {/* Filters and relevance box */} ..
+        {/* Filters and relevance box */} 
         <Box
           w={{ xl: "80%", md: "80%", base: "95%" }}
           m="20px auto"
@@ -256,7 +265,11 @@ const Appliances = () => {
               <Text mb="16px" fontSize="14px">
                 AVAILABILITY
               </Text>
-              <Checkbox defaultChecked={stock.includes("outofstock")} onChange={handleStock} value={"outofstock"}>
+              <Checkbox
+                defaultChecked={stock.includes("outofstock")}
+                onChange={handleStock}
+                value={"outofstock"}
+              >
                 <Text fontSize="14px">Out of Stock</Text>
               </Checkbox>
             </Box>
@@ -305,7 +318,6 @@ const Appliances = () => {
           >
             {appliances?.map((item) => (
               <ProductsCard key={item.id} {...item} goTo={"Appliances"} />
-
             ))}
           </Box>
         </Box>
