@@ -22,7 +22,7 @@ const Cart = () => {
 
   const getCart = () => {
     axios
-      .get("https://rentomojodata.herokuapp.com/cart")
+      .get("https://rento105.herokuapp.com/cart")
       .then((res) => setCartData(res.data))
       .catch(() => null);
   };
@@ -33,7 +33,7 @@ const Cart = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://rentomojodata.herokuapp.com/cart/${id}`)
+      .delete(`https://rento105.herokuapp.com/cart/${id}`)
       .then((res) => {
         getCart();
         toast({

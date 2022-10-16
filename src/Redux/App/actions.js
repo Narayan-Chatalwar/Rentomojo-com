@@ -3,7 +3,8 @@ import axios from "axios";
 
 export const getElectronicsData = (params) => (dispatch) => {
   return axios
-    .get("https://rentomojodata.herokuapp.com/electronics", params)
+    // .get("https://rentomojodata.herokuapp.com/electronics", params)
+    .get("https://rento105.herokuapp.com/electronics", params)
     .then((res) =>
       dispatch({ type: types.GET_ELECTRONICS_DATA_SUCCESS, payload: res.data })
     );
@@ -12,7 +13,7 @@ export const getElectronicsData = (params) => (dispatch) => {
 export const getFitnessData = (params) => (dispatch) => {
   dispatch({ type: types.GET_FITNESS_DATA_REQUEST });
   axios
-    .get("https://rentomojodata.herokuapp.com/fitness", params)
+    .get("https://rento105.herokuapp.com/fitness", params)
     .then((res) =>
       dispatch({ type: types.GET_FITNESS_DATA_SUCCESS, payload: res.data })
     )
@@ -24,7 +25,7 @@ export const getFitnessData = (params) => (dispatch) => {
 export const getFurnitureData = (params) => (dispatch) => {
   dispatch({ type: types.GET_FURNITURE_DATA_REQUEST });
   axios
-    .get("https://rentomojodata.herokuapp.com/furniture", params)
+    .get("https://rento105.herokuapp.com/furniture", params)
     .then((res) =>
       dispatch({ type: types.GET_FURNITURE_DATA_SUCCESS, payload: res.data })
     )
@@ -36,7 +37,7 @@ export const getFurnitureData = (params) => (dispatch) => {
 export const getAppliances = (params) => (dispatch) => {
   dispatch({ type: types.GET_APPLIANCES_REQUEST });
   axios
-    .get("https://rentomojodata.herokuapp.com/appliances", params)
+    .get("https://rento105.herokuapp.com/appliances", params)
     .then((r) =>
       dispatch({ type: types.GET_APPLIANCES_SUCCESS, payload: r.data })
     )
@@ -48,7 +49,7 @@ export const getAppliances = (params) => (dispatch) => {
 export const addToCart = (params) => (dispatch) => {
   dispatch({ type: types.ADD_TO_CART_REQUEST });
   return axios
-    .post("https://rentomojodata.herokuapp.com/cart", params)
+    .post("https://rento105.herokuapp.com/cart", params)
     .then((r) =>
       dispatch({ type: types.ADD_TO_CART_SUCCESS, payload: r.payload })
     )
@@ -59,7 +60,7 @@ export const addToCart = (params) => (dispatch) => {
 export const getCartData = () => (dispatch) => {
   dispatch({ type: types.GET_CART_REQUEST });
   return axios
-    .get("https://rentomojodata.herokuapp.com/cart")
+    .get("https://rento105.herokuapp.com/cart")
     .then((r) => dispatch({ type: types.GET_CART_SUCCESS, payload: r.data }))
     .catch((e) => dispatch({ type: types.GET_CART_FAILURE }));
 };

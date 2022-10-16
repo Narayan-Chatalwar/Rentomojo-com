@@ -29,7 +29,7 @@ const Navbar = () => {
   const Cart = useSelector(store => store.App.cart)
 
   useEffect(() => {
-    axios.get(`https://rentomojodata.herokuapp.com/product`).then((r) => {
+    axios.get(`https://rento105.herokuapp.com/product`).then((r) => {
       setApiData(r.data);
     });
 
